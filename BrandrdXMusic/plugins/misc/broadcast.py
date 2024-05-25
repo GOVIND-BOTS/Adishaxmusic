@@ -3,7 +3,7 @@ import asyncio
 from pyrogram import filters
 from pyrogram.enums import ChatMembersFilter
 from pyrogram.errors import FloodWait
-from BrandrdXMusic.plugins.sudo import SUDOERS
+from BrandrdXMusic.plugins.sudo import sudoers
 from BrandrdXMusic import app
 from config import OWNER_ID
 from BrandrdXMusic.utils.database import (
