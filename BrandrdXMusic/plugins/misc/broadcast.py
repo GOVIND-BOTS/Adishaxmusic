@@ -3,7 +3,7 @@ import asyncio
 from pyrogram import filters
 from pyrogram.enums import ChatMembersFilter
 from pyrogram.errors import FloodWait
-
+from BrandrdXMusic.plugins.sudo import SUDOERS
 from BrandrdXMusic import app
 from config import OWNER_ID
 from BrandrdXMusic.utils.database import (
@@ -25,7 +25,7 @@ IS_BROADCASTING = False
 async def braodcast_message(client, message, _):
     if message.from_user.id != OWNER_ID:
         return await message.reply_text(
-            "» **sɪʀғ ʏᴇʜ @BRANDRD_BOT ʙʀᴏᴀᴅᴄᴀsᴛ ᴋᴀʀ sᴀᴋᴛᴀ ʜᴀɪ 😏**\n» ᴊᴏɪɴ @BRANDED_WORLD ғᴏʀ ᴘʀᴏᴍᴏ"
+            "» **sɪʀғ ʏᴇʜ @govind_official_mppp ʙʀᴏᴀᴅᴄᴀsᴛ ᴋᴀʀ sᴀᴋᴛᴀ ʜᴀɪ 😏**\n» ᴊᴏɪɴ @the_govind_op ғᴏʀ ᴘʀᴏᴍᴏ"
         )
     global IS_BROADCASTING
     if message.reply_to_message:
