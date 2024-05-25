@@ -2,7 +2,7 @@ import random
 import time
 import requests
 from BrandrdXMusic import app
-from config import BOT_USERNAME
+from config import MUSIC_BOT_NAME
 
 from pyrogram.enums import ChatAction, ParseMode
 from pyrogram import filters
