@@ -134,4 +134,4 @@ async def overall_rank(_, query):
     await query.message.edit_text(response, reply_markup=button)
 
 # Start the Pyrogram app
-app.run()
+
