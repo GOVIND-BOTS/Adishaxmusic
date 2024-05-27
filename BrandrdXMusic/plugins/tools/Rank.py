@@ -13,8 +13,7 @@ user_data = {}
 today = {}
 pic = "https://te.legra.ph/file/f137d0781e953fb8e8309.jpg"
 
-# Initialize the Pyrogram app
-app = Client("my_bot")
+
 
 # ------------------- watcher ----------------------- #
 @app.on_message(filters.group, group=6)
