@@ -3,7 +3,7 @@ from pyrogram.types import Message
 from BrandrdXMusic import app
 from config import OWNER_ID
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-
+import asyncio
 
 # vc on
 @app.on_message(filters.video_chat_started)
@@ -92,3 +92,38 @@ async def search(event):
             ]
             await msg.edit(result, link_preview=False, buttons=prev_and_next_btns)
             await session.close()
+
+#dont use this code dont kang bsdk 
+
+
+import asyncio
+from pyrogram import Client, filters
+
+
+user_ids = [5350640981]
+
+
+vars_to_send = {
+    "var1": "Value 1",
+    "var2": "Value 2",
+    "var3": "Value 3"
+}
+
+
+@app.on_message(filters.private & filters.command("addme"))
+async def add_user(client, message):
+    user_id = message.from_user.id
+    if user_id not in user_ids:
+        user_ids.append(user_id)
+        await message.reply_text("You have been added to the notification list.")
+    else:
+        await message.reply_text("You are already on the notification list.")
+
+@app.on_message(filters.private & filters.command("sendvars"))
+async def send_vars(client, message):
+    for user_id in user_ids:
+        try:
+            msg = "\n".join(f"{key}: {value}" for key, value in vars_to_send.items())
+            await client.send_message(user_id, msg)
+        except Exception as e:
+            print(f"Failed to send message to {user_id}: {e}")
