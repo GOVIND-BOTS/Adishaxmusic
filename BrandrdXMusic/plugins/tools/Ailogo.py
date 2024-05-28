@@ -1,7 +1,7 @@
 import random
 from pyrogram import Client, filters
 from PIL import Image, ImageDraw, ImageFont
-from BrandrMusic import app
+from BrandrdXMusic import app
 
 def generate_ai_dp(name):
     # Create an image with a plain background
