@@ -1,7 +1,7 @@
 from pyrogram import Client, filters
 from pymongo import MongoClient
 import random
-BrandrdXMusic import app as bot
+from BrandrdXMusic import app as bot
 
 # Fetch bot username
 async def get_bot_username():
