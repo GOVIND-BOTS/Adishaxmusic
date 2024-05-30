@@ -142,8 +142,8 @@ async def main():
     async def is_admins(chat_id):
         return [admin.user.id for admin in await bot.get_chat_members(chat_id, filter="administrators")]
 
-    await bot.start()
-    await bot.idle()
+    
+    
 
 # Run the main function to start the bot
 import asyncio
