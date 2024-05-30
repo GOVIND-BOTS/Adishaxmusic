@@ -1,6 +1,6 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message, ChatPermissions
-BrandrdXMusic import app 
+from BrandrdXMusic import app 
 
 # Welcome new members
 @app.on_message(filters.new_chat_members)
