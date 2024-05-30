@@ -10,7 +10,7 @@ from BrandrdXMusic import app
   
 
 @app.on_message(
-        filters.command(["chatbot off", f"chatbot@{MUSIC_BOT_NAME} off"], prefixes=["/", ".", "?", "-"])
+        filters.command(["chatbot off", f"chatbot@{(app.mention} off"], prefixes=["/", ".", "?", "-"])
         & ~filters.private)
 async def chatbotofd(client, message):
     vickdb = MongoClient(MONGO_URL)    
@@ -33,7 +33,7 @@ async def chatbotofd(client, message):
     
 
 @app.on_message(
-    filters.command(["chatbot on", f"chatbot@{BOT_USERNAME} on"] ,prefixes=["/", ".", "?", "-"])
+    filters.command(["chatbot on", f"chatbot@{app.mention} on"] ,prefixes=["/", ".", "?", "-"])
     & ~filters.private)
 async def chatboton(client, message):
     vickdb = MongoClient(MONGO_URL)    
