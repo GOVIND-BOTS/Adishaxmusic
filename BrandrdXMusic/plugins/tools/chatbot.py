@@ -2,22 +2,10 @@ import asyncio
 import random
 from pyrogram import Client, filters
 from pymongo import MongoClient
-from typing import List
 
 # Import modules from your project
 from BrandrdXMusic import app as bot
-from config import MONGO_DB_URI, SUPPORT_CHAT, adminlist, confirmer
-from BrandrdXMusic.utils.database import (
-    get_authuser_names,
-    get_cmode,
-    get_lang,
-    get_upvote_count,
-    is_active_chat,
-    is_maintenance,
-    is_nonadmin_chat,
-    is_skipmode,
-)
-from strings import get_string
+from config import MONGO_DB_URI
 
 # Initialize MongoDB client and database
 mongo = MongoClient(MONGO_DB_URI)
@@ -54,17 +42,17 @@ async def process_reply(chatai, message, bot):
             is_chat = chatai.find_one({"word": message.reply_to_message.text, "id": message.sticker.file_unique_id})
             if not is_chat:
                 chatai.insert_one({
-                    "word": message.reply_to_message.text, 
-                    "text": message.sticker.file_id, 
-                    "check": "sticker", 
+                    "word": message.reply_to_message.text,
+                    "text": message.sticker.file_id,
+                    "check": "sticker",
                     "id": message.sticker.file_unique_id
                 })
         if message.text:
             is_chat = chatai.find_one({"word": message.reply_to_message.text, "text": message.text})
             if not is_chat:
                 chatai.insert_one({
-                    "word": message.reply_to_message.text, 
-                    "text": message.text, 
+                    "word": message.reply_to_message.text,
+                    "text": message.text,
                     "check": "none"
                 })
 
@@ -145,4 +133,6 @@ async def main():
 
     await bot.start()
 
-
+# Entry point
+if __name__ == "__main__":
+    asyncio.run(main())
