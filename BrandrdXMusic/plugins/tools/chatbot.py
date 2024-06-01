@@ -1,9 +1,9 @@
 from pyrogram import Client, filters
 from pymongo import MongoClient
 import random
+import asyncio
 from BrandrdXMusic import app as bot
 from typing import List
-from BrandrdXMusic.utils import admin_check, cmdforac
 from config import MONGO_DB_URI
 from BrandrdXMusic.utils.database import (
     get_authuser_names,
@@ -17,7 +17,7 @@ from BrandrdXMusic.utils.database import (
 )
 from config import SUPPORT_CHAT, adminlist, confirmer
 from strings import get_string
-from BrandrdXMusic.utils.decorator import admins
+
 
 # Initialize MongoDB client and database
 mongo = MongoClient(MONGO_DB_URI)
@@ -160,5 +160,3 @@ async def main():
     await bot.start()
 
 # Run the main function to start the bot
-import asyncio
-
