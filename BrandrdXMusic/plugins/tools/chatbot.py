@@ -3,7 +3,8 @@ from pymongo import MongoClient
 import random
 from BrandrdXMusic import app as bot
 from typing import Union, List
-
+from BrandrdXMusic.utils import admin_check
+from BrandrdXMusic.utils import cmdforac
 from config import MONGO_DB_URI
 
 mongo = MongoClient(MONGO_DB_URI)
