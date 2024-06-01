@@ -22,7 +22,7 @@ async def main():
         & ~filters.private)
     async def chatbot_off(client, message):
         vickdb = MongoClient(MONGO_URL)
-        vick = vickdb["VickDb"]["Vick"]
+        vick = vickdb["BrandrdXMusic"][".couple"]
         if message.from_user:
             user = message.from_user.id
             chat_id = message.chat.id
@@ -41,7 +41,7 @@ async def main():
         & ~filters.private)
     async def chatbot_on(client, message):
         vickdb = MongoClient(MONGO_URL)
-        vick = vickdb["VickDb"]["Vick"]
+        vick = vickdb["BrandrdXMusic"]["db.couple"]
         if message.from_user:
             user = message.from_user.id
             chat_id = message.chat.id
@@ -70,7 +70,7 @@ async def main():
         chatdb = MongoClient(MONGO_URL)
         chatai = chatdb["Word"]["WordDb"]
         vickdb = MongoClient(MONGO_URL)
-        vick = vickdb["VickDb"]["Vick"]
+        vick = vickdb["BrandrdXMusic"]["db.couple"]
         is_vick = vick.find_one({"chat_id": message.chat.id})
 
         if not is_vick:
