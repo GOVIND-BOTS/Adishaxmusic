@@ -5,7 +5,20 @@ from BrandrdXMusic import app as bot
 from typing import List
 from BrandrdXMusic.utils import admin_check, cmdforac
 from config import MONGO_DB_URI
+from BrandrdXMusic.utils.database import (
+    get_authuser_names,
+    get_cmode,
+    get_lang,
+    get_upvote_count,
+    is_active_chat,
+    is_maintenance,
+    is_nonadmin_chat,
+    is_skipmode,
+)
+from config import SUPPORT_CHAT, adminlist, confirmer
+from strings import get_string
 
+from ..formatters import int_to_alpha
 # Initialize MongoDB client and database
 mongo = MongoClient(MONGO_DB_URI)
 db = mongo.BrandrdXMusic
