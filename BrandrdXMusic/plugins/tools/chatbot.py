@@ -145,5 +145,4 @@ async def main():
 
     await bot.start()
 
-# Run the main function to start the bot
-asyncio.run(main())
+
