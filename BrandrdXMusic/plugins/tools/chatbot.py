@@ -2,11 +2,11 @@ from pyrogram import Client, filters
 from pymongo import MongoClient
 import random
 from BrandrdXMusic import app as bot
-from typing import Union, List
-from BrandrdXMusic.utils import admin_check
-from BrandrdXMusic.utils import cmdforac
+from typing import List
+from BrandrdXMusic.utils import admin_check, cmdforac
 from config import MONGO_DB_URI
 
+# Initialize MongoDB client and database
 mongo = MongoClient(MONGO_DB_URI)
 db = mongo.BrandrdXMusic
 
@@ -22,69 +22,16 @@ async def main():
     global bot_username
     bot_username = await get_bot_username(bot)
 
-    # Handler for turning the chatbot off
-    @bot.on_message(
-        filters.command(["chatbot off", f"chatbot@{bot_username} off"], prefixes=["/", ".", "?", "-"])
-        & ~filters.private)
-    async def chatbot_off(client, message):
-        vickdb = MongoClient(MONGO_URL)
-        vick = vickdb["BrandrdXMusic"][".couple"]
-        if message.from_user:
-            user = message.from_user.id
-            chat_id = message.chat.id
-            if user not in (await is_admins(chat_id)):
-                return await message.reply_text("You are not admin")
-        is_vick = vick.find_one({"chat_id": message.chat.id})
-        if not is_vick:
-            vick.insert_one({"chat_id": message.chat.id})
-            await message.reply_text("Chatbot Disabled!")
-        else:
-            await message.reply_text("ChatBot Already Disabled")
+    # MongoDB collections
+    vick_collection = db[".couple"]
+    chatdb = MongoClient(MONGO_DB_URI)["Word"]["WordDb"]
 
-    # Handler for turning the chatbot on
-    @bot.on_message(
-        filters.command(["chatbot on", f"chatbot@{bot_username} on"], prefixes=["/", ".", "?", "-"])
-        & ~filters.private)
-    async def chatbot_on(client, message):
-        vickdb = MongoClient(MONGO_URL)
-        vick = vickdb["BrandrdXMusic"]["db.couple"]
-        if message.from_user:
-            user = message.from_user.id
-            chat_id = message.chat.id
-            if user not in (await is_admins(chat_id)):
-                return await message.reply_text("You are not admin")
-        is_vick = vick.find_one({"chat_id": message.chat.id})
-        if not is_vick:
-            await message.reply_text("Chatbot Already Enabled")
-        else:
-            vick.delete_one({"chat_id": message.chat.id})
-            await message.reply_text("ChatBot Enabled!")
-
-    # Handler for showing chatbot usage
-    @bot.on_message(
-        filters.command(["chatbot", f"chatbot@{bot_username}"], prefixes=["/", ".", "?", "-"])
-        & ~filters.private)
-    async def chatbot_usage(client, message):
-        await message.reply_text("**Usage:**\n/**chatbot [on/off]**\n**Chat-bot commands work in group only!**")
-
-    # General handler for messages in groups
-    @bot.on_message(
-        (filters.text | filters.sticker)
-        & ~filters.private
-        & ~filters.bot)
-    async def group_message_handler(client, message):
-        chatdb = MongoClient(MONGO_URL)
-        chatai = chatdb["Word"]["WordDb"]
-        vickdb = MongoClient(MONGO_URL)
-        vick = vickdb["BrandrdXMusic"]["db.couple"]
-        is_vick = vick.find_one({"chat_id": message.chat.id})
-
-        if not is_vick:
-            await client.send_chat_action(message.chat.id, "typing")
-            if not message.reply_to_message:
-                await process_message(chatai, message)
-            else:
-                await process_reply(chatai, message, bot)
+    # Function to check if a user is an admin
+    async def is_admins(chat_id):
+        try:
+            return [admin.user.id for admin in await bot.get_chat_members(chat_id, filter="administrators")]
+        except Exception:
+            return []
 
     # Function to process a message
     async def process_message(chatai, message):
@@ -130,27 +77,75 @@ async def main():
                 if not is_chat:
                     chatai.insert_one({"word": message.reply_to_message.text, "text": message.text, "check": "none"})
 
+    # Handler for turning the chatbot off
+    @bot.on_message(
+        filters.command(["chatbot off", f"chatbot@{bot_username} off"], prefixes=["/", ".", "?", "-"])
+        & ~filters.private)
+    async def chatbot_off(client, message):
+        if message.from_user:
+            user = message.from_user.id
+            chat_id = message.chat.id
+            if user not in (await is_admins(chat_id)):
+                return await message.reply_text("You are not admin")
+        is_vick = vick_collection.find_one({"chat_id": message.chat.id})
+        if not is_vick:
+            vick_collection.insert_one({"chat_id": message.chat.id})
+            await message.reply_text("Chatbot Disabled!")
+        else:
+            await message.reply_text("ChatBot Already Disabled")
+
+    # Handler for turning the chatbot on
+    @bot.on_message(
+        filters.command(["chatbot on", f"chatbot@{bot_username} on"], prefixes=["/", ".", "?", "-"])
+        & ~filters.private)
+    async def chatbot_on(client, message):
+        if message.from_user:
+            user = message.from_user.id
+            chat_id = message.chat.id
+            if user not in (await is_admins(chat_id)):
+                return await message.reply_text("You are not admin")
+        is_vick = vick_collection.find_one({"chat_id": message.chat.id})
+        if not is_vick:
+            await message.reply_text("Chatbot Already Enabled")
+        else:
+            vick_collection.delete_one({"chat_id": message.chat.id})
+            await message.reply_text("ChatBot Enabled!")
+
+    # Handler for showing chatbot usage
+    @bot.on_message(
+        filters.command(["chatbot", f"chatbot@{bot_username}"], prefixes=["/", ".", "?", "-"])
+        & ~filters.private)
+    async def chatbot_usage(client, message):
+        await message.reply_text("**Usage:**\n/**chatbot [on/off]**\n**Chat-bot commands work in group only!**")
+
+    # General handler for messages in groups
+    @bot.on_message(
+        (filters.text | filters.sticker)
+        & ~filters.private
+        & ~filters.bot)
+    async def group_message_handler(client, message):
+        is_vick = vick_collection.find_one({"chat_id": message.chat.id})
+        if not is_vick:
+            await client.send_chat_action(message.chat.id, "typing")
+            if not message.reply_to_message:
+                await process_message(chatdb, message)
+            else:
+                await process_reply(chatdb, message, bot)
+
     # Handler for messages in private chats
     @bot.on_message(
         (filters.text | filters.sticker)
         & filters.private
         & ~filters.bot)
     async def private_message_handler(client, message):
-        chatdb = MongoClient(MONGO_URL)
-        chatai = chatdb["Word"]["WordDb"]
         await client.send_chat_action(message.chat.id, "typing")
         if not message.reply_to_message:
-            await process_message(chatai, message)
+            await process_message(chatdb, message)
         else:
-            await process_reply(chatai, message, bot)
+            await process_reply(chatdb, message, bot)
 
-    # Function to check if a user is an admin
-    async def is_admins(chat_id):
-        return [admin.user.id for admin in await bot.get_chat_members(chat_id, filter="administrators")]
-
-    
-    
+    await bot.start()
 
 # Run the main function to start the bot
 import asyncio
-
+asyncio.run(main())
