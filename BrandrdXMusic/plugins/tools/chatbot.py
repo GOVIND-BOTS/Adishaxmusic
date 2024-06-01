@@ -2,7 +2,12 @@ from pyrogram import Client, filters
 from pymongo import MongoClient
 import random
 from BrandrdXMusic import app as bot
+from typing import Union, List
 
+from config import MONGO_DB_URI
+
+mongo = MongoCli(MONGO_DB_URI)
+db = mongo.BrandrdXMusic
 
 async def get_bot_username(client):
     async with client:
