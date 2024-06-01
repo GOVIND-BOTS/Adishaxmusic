@@ -17,7 +17,7 @@ from BrandrdXMusic.utils.database import (
 )
 from config import SUPPORT_CHAT, adminlist, confirmer
 from strings import get_string
-
+from BrandrdXMusic.utils.decorator import admins
 
 # Initialize MongoDB client and database
 mongo = MongoClient(MONGO_DB_URI)
