@@ -1,5 +1,5 @@
 from pyrogram import Client, filters
-from BrandrdXMusic app as bot
+from BrandrdXMusic impoort app as bot
 from pymongo import MongoClient
 import requests
 import random
