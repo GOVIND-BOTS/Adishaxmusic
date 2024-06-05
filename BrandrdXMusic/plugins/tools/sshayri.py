@@ -3,7 +3,7 @@ import io
 from PIL import Image, ImageDraw, ImageFont
 import requests
 from pyrogram import Client, filters
-
+from BrandrdXMusic import app
 # List of romantic shayari
 romantic_shayari = [
     "तेरे प्यार का कितना खूबसूरत एहसास है, दूर होकर भी लगता है जैसे तू हर पल मेरे पास है।",
