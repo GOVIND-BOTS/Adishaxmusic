@@ -1,14 +1,13 @@
-#loda lelo😁😀
-
 import os
 from pyrogram import Client, filters
-from BrandrdXMusic import app
-from instaloader import instaloader
+from instaloader import Instaloader, Post
 from pyrogram.types import Message
-import asyncio
-from bs4 import BeautifulSoup
+from BrandrdXMusic import app
+# Initialize Instaloader
+L = Instaloader()
 
-L = instaloader.Instaloader()
+
+
 
 @app.on_message(filters.private & filters.text)
 async def handle_instagram_link(client, message):
@@ -16,7 +15,10 @@ async def handle_instagram_link(client, message):
     if "instagram.com" in text:
         await message.reply_text("Downloading the video from Instagram...")
         try:
-            L.download_post(instaloader.Post.from_shortcode(L.context, text.split("/")[-2]), target="downloads")
+            shortcode = text.split("/")[-2] if text.endswith("/") else text.split("/")[-1]
+            post = Post.from_shortcode(L.context, shortcode)
+            L.download_post(post, target="downloads")
+            
             video_file = next(file for file in os.listdir("downloads") if file.endswith(".mp4"))
             video_path = os.path.join("downloads", video_file)
 
@@ -30,4 +32,8 @@ async def handle_instagram_link(client, message):
         except Exception as e:
             await message.reply_text(f"An error occurred: {e}")
     else:
-        await message.reply_text("Please send a valid Instagram video link.")
+        # Only reply if the message does not contain an Instagram link
+        if "instagram.com" not in text:
+            return
+
+
