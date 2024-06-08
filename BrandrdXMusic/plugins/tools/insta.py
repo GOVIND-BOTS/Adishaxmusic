@@ -3,6 +3,7 @@
 import os
 from pyrogram import Client, filters
 from BrandrdXMusic import app
+from instaloader import instaloader
 from pyrogram.types import Message
 import asyncio
 from bs4 import BeautifulSoup
