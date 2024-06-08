@@ -23,7 +23,7 @@ async def get_video_stream(link):
     return video
 
 def get_video_info(title):
-    url_base = f'https://de.sexvid.xxx/search/{title}'
+    url_base = f'https://xnxx.com/search/{title}'
     try:
         with requests.Session() as s:
             r = s.get(url_base)
