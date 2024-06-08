@@ -2,7 +2,6 @@
 
 import os
 from pyrogram import Client, filters
-import instaloader
 from BrandrdXMusic import app
 from pyrogram.types import Message
 import asyncio
