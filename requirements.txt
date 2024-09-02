@@ -21,7 +21,7 @@ spotipy
 tgcrypto
 telegraph
 unidecode
-yt-dlp
+yt-dlp==2024.8.6
 #git+https://github.com/joetats/youtube_search@master
 #git+https://github.com/alexmercerind/youtube-search-python@main
 youtube-search
